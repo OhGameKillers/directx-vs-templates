@@ -24,6 +24,9 @@
     <ClInclude Include="StepTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

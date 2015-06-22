@@ -4,12 +4,14 @@
 
 #pragma once
 
-#include "pch.h"
+#include "DeviceResources.h"
 #include "StepTimer.h"
+
+#include <memory>
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop
-class Game
+class Game : public DX::IDeviceNotify
 {
 public:
 
@@ -24,7 +26,10 @@ public:
 
     // Rendering helpers
     void Clear();
-    void Present();
+  
+    // IDeviceNotify
+    virtual void OnDeviceLost() override;
+    virtual void OnDeviceRestored() override;
 
     // Messages
     void OnActivated();
@@ -43,25 +48,9 @@ private:
     void CreateDevice();
     void CreateResources();
     
-    void OnDeviceLost();
+    // Device resources.
+    std::unique_ptr<DX::DeviceResources> m_deviceResources;
 
-    // Application state
-    HWND                                            m_window;
-
-    // Direct3D Objects
-    D3D_FEATURE_LEVEL                               m_featureLevel;
-    Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
-    Microsoft::WRL::ComPtr<ID3D11Device1>           m_d3dDevice1;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext>     m_d3dContext;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    m_d3dContext1;
-
-    // Rendering resources
-    Microsoft::WRL::ComPtr<IDXGISwapChain>          m_swapChain;
-    Microsoft::WRL::ComPtr<IDXGISwapChain1>         m_swapChain1;
-    Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  m_renderTargetView;
-    Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  m_depthStencilView;
-    Microsoft::WRL::ComPtr<ID3D11Texture2D>         m_depthStencil;
-
-    // Game state
-    DX::StepTimer                                   m_timer;
+    // Rendering loop timer.
+    DX::StepTimer m_timer;
 };
